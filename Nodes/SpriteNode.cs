@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Animapix
+namespace Color_Breaker
 {
     public class SpriteNode : Node
     {

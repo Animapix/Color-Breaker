@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Animapix
+namespace Color_Breaker
 {
     public static class Services
     {

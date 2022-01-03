@@ -1,5 +1,5 @@
 ﻿
-namespace Animapix
+namespace Color_Breaker
 {
     public interface IAssets
     {

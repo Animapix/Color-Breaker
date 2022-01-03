@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Animapix
+namespace Color_Breaker
 {
     public sealed class NodeTree : INodeTree
     {

@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Animapix
+namespace Color_Breaker
 {
     public sealed class AssetsManager : IAssets
     {

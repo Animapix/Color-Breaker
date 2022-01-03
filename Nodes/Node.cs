@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 
-namespace Animapix
+namespace Color_Breaker
 {
     public class Node
     {

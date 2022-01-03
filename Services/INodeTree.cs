@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Animapix
+namespace Color_Breaker
 {
     public interface INodeTree
     {
