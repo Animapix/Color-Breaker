@@ -33,7 +33,9 @@ namespace Color_Breaker
         {
 
             spriteBatch.Begin();
-  
+
+            
+
             Dictionary<Layer, List<Node>> layers = new Dictionary<Layer, List<Node>>();
             foreach (Layer layerKey in Enum.GetValues(typeof(Layer)))
             {
@@ -59,6 +61,15 @@ namespace Color_Breaker
                     node.Draw(spriteBatch);
                 }
             }
+            /*
+            foreach (Node node in _nodes)
+            {
+                node.Draw(spriteBatch);
+                foreach (Node child in node.Children)
+                {
+                    child.Draw(spriteBatch);
+                }
+            }*/
 
             spriteBatch.End();
         }

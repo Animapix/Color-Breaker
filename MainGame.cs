@@ -5,19 +5,7 @@ using System.Diagnostics;
 
 namespace Color_Breaker
 {
-    public enum SceneType
-    {
-        Menu,
-        Game
-    }
-
-    public enum Layer
-    {
-        none,
-        Background,
-        Shadows,
-        props
-    }
+    
 
     public class MainGame : Game
     {
@@ -25,6 +13,7 @@ namespace Color_Breaker
         private SpriteBatch _spriteBatch;
         private AssetsManager _assetsManager;
         private SceneManager _sceneManager;
+        private ScreenManager _screenManager;
 
         public MainGame()
         {
@@ -39,6 +28,9 @@ namespace Color_Breaker
         {
             _sceneManager.Register(SceneType.Game, new SceneGame());
             _sceneManager.Register(SceneType.Menu, new SceneMenu());
+
+            _screenManager = new ScreenManager(_graphics, 1600, 900);
+
             base.Initialize();
         }
 
@@ -52,6 +44,11 @@ namespace Color_Breaker
             _assetsManager.LoadAsset<Texture2D>("Ball");
             _assetsManager.LoadAsset<Texture2D>("BallShadow");
             _assetsManager.LoadAsset<Texture2D>("Background");
+
+            _assetsManager.LoadAsset<Texture2D>("Wall_H");
+            _assetsManager.LoadAsset<Texture2D>("Wall_V");
+            _assetsManager.LoadAsset<Texture2D>("Wall_H_Shadow");
+            _assetsManager.LoadAsset<Texture2D>("Wall_V_Shadow");
 
 
             _sceneManager.Load(SceneType.Game);

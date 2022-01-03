@@ -62,10 +62,6 @@ namespace Color_Breaker
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            foreach (Node child in Children)
-            {
-                child.Draw(spriteBatch);
-            }
         }
     }
 }
