@@ -8,14 +8,9 @@ namespace Color_Breaker
     {
         protected NodeTree _nodeTree;
 
-        public Scene()
-        {
-            _nodeTree = new NodeTree();
-        }
-
         public virtual void Load()
         {
-
+            _nodeTree = new NodeTree();
         }
 
         public virtual void Update(GameTime gameTime)
@@ -30,7 +25,7 @@ namespace Color_Breaker
 
         public virtual void Unload()
         {
-
+            _nodeTree = null;
         }
 
     }

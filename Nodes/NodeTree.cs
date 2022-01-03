@@ -12,7 +12,7 @@ namespace Color_Breaker
 
         public NodeTree()
         {
-
+            Services.RegisterService<INodeTree>(this);
         }
 
         public void Add(Node node)

@@ -29,7 +29,8 @@ namespace Color_Breaker
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            _sceneManager.Register(SceneType.Game, new SceneGame());
+            _sceneManager.Register(SceneType.Menu, new SceneMenu());
             base.Initialize();
         }
 
@@ -41,6 +42,8 @@ namespace Color_Breaker
             _assetsManager.LoadAsset<Texture2D>("Brick");
             _assetsManager.LoadAsset<Texture2D>("BrickShadow");
 
+
+            _sceneManager.Load(SceneType.Game);
         }
 
         protected override void Update(GameTime gameTime)
