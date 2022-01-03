@@ -12,12 +12,17 @@ namespace Color_Breaker
         private SpriteBatch _spriteBatch;
         private AssetsManager _assetsManager;
 
+
+        private NodeTree _nodeTree;
+
         public MainGame()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
             IsFixedTimeStep = false;
+
+            _nodeTree = new NodeTree();
         }
 
         protected override void Initialize()
@@ -34,6 +39,8 @@ namespace Color_Breaker
             _assetsManager.LoadAsset<Texture2D>("Brick");
             _assetsManager.LoadAsset<Texture2D>("BrickShadow");
 
+            SpriteNode sprite = new SpriteNode(100, 100, Color.White, _assetsManager.GetAsset<Texture2D>("Brick"));
+            _nodeTree.Add(sprite);
         }
 
         protected override void Update(GameTime gameTime)
@@ -41,7 +48,7 @@ namespace Color_Breaker
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            _nodeTree.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -50,7 +57,7 @@ namespace Color_Breaker
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            _nodeTree.Draw(_spriteBatch);
 
             base.Draw(gameTime);
         }

@@ -19,6 +19,8 @@ namespace Animapix
                 else
                     return Position;
             }
+
+            
         }
 
         public Node() : this(Vector2.Zero) { }
