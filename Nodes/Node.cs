@@ -2,11 +2,10 @@
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 
-namespace Animapix.Nodes
+namespace Animapix
 {
     public class Node
     {
-
         public Node Parent { get; private set; }
         public List<Node> Children { get; private set; }
 
@@ -50,6 +49,5 @@ namespace Animapix.Nodes
                 child.Draw(spriteBatch);
             }
         }
-
     }
 }
