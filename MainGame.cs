@@ -11,6 +11,14 @@ namespace Color_Breaker
         Game
     }
 
+    public enum Layer
+    {
+        none,
+        Background,
+        Shadows,
+        props
+    }
+
     public class MainGame : Game
     {
         private GraphicsDeviceManager _graphics;
