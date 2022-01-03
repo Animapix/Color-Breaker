@@ -1,4 +1,4 @@
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 
@@ -8,6 +8,7 @@ namespace Color_Breaker
     {
         public Node Parent { get; private set; }
         public List<Node> Children { get; private set; }
+        public Layer Layer = Layer.none;
 
         public Vector2 Position;
         public Vector2 GlobalPosition
@@ -24,10 +25,12 @@ namespace Color_Breaker
         }
 
         public Node() : this(Vector2.Zero) { }
-        public Node(Vector2 position)
+        public Node(Layer layer) : this(Vector2.Zero, layer) { }
+        public Node(Vector2 position, Layer layer = Layer.none)
         {
             Position = position;
             Children = new List<Node>();
+            Layer = layer;
         }
 
         public void AddChild(Node child)
