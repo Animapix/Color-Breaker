@@ -20,10 +20,12 @@ namespace Color_Breaker
 
             Wall wallTop = new Wall(screen.Center.X, 90, Side.Top);
             Wall wallLeft = new Wall(190, screen.Center.Y, Side.Left);
+            Wall wallBottom = new Wall(screen.Center.X, screen.Height - 90, Side.Bottom);
             Wall wallRight = new Wall(screen.Width - 190, screen.Center.Y, Side.Right);
 
             _nodeTree.Add(wallLeft);
             _nodeTree.Add(wallRight);
+            _nodeTree.Add(wallBottom);
             _nodeTree.Add(wallTop);
 
             Ball ball = new Ball(100, 200, new Rectangle(200,100,1200,700));
