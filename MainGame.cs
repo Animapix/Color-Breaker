@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Diagnostics;
 
 namespace Color_Breaker
 {
@@ -22,7 +23,6 @@ namespace Color_Breaker
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
             base.Initialize();
         }
 
@@ -33,6 +33,7 @@ namespace Color_Breaker
             _assetsManager = new AssetsManager(Content);
             _assetsManager.LoadAsset<Texture2D>("Brick");
             _assetsManager.LoadAsset<Texture2D>("BrickShadow");
+
         }
 
         protected override void Update(GameTime gameTime)
