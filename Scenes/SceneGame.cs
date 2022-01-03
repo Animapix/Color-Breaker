@@ -13,9 +13,12 @@ namespace Color_Breaker
         {
             base.Load();
             IAssets assets = Services.Get<IAssets>();
-            SpriteNode sprite = new SpriteNode(100, 100, Color.White, assets.GetAsset<Texture2D>("Brick"));
-            _nodeTree.Add(sprite);
 
+            SpriteNode background = new SpriteNode(0, 0, Color.White, assets.GetAsset<Texture2D>("Background"));
+            _nodeTree.Add(background);
+
+            Ball ball = new Ball(100, 200);
+            _nodeTree.Add(ball);
         }
 
     }

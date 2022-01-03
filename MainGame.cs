@@ -41,6 +41,9 @@ namespace Color_Breaker
             _assetsManager = new AssetsManager(Content);
             _assetsManager.LoadAsset<Texture2D>("Brick");
             _assetsManager.LoadAsset<Texture2D>("BrickShadow");
+            _assetsManager.LoadAsset<Texture2D>("Ball");
+            _assetsManager.LoadAsset<Texture2D>("BallShadow");
+            _assetsManager.LoadAsset<Texture2D>("Background");
 
 
             _sceneManager.Load(SceneType.Game);
