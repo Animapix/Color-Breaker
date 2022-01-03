@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 
@@ -34,6 +34,19 @@ namespace Color_Breaker
         {
             child.Parent = this;
             Children.Add(child);
+        }
+
+        public List<Node> GetAllChildren()
+        {
+            List<Node> result = new List<Node>();
+
+            foreach (Node child in Children)
+            {
+                result.Add(child);
+                result.AddRange(child.GetAllChildren());
+            }
+
+            return result;
         }
 
         public virtual void Update(GameTime gameTime)
