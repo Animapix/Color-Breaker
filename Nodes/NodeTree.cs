@@ -1,8 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
+using System.Diagnostics;
 using System.Collections.Generic;
-using System.Text;
+using System;
 
 namespace Color_Breaker
 {
@@ -31,11 +31,35 @@ namespace Color_Breaker
 
         public void Draw(SpriteBatch spriteBatch)
         {
+
             spriteBatch.Begin();
+  
+            Dictionary<Layer, List<Node>> layers = new Dictionary<Layer, List<Node>>();
+            foreach (Layer layerKey in Enum.GetValues(typeof(Layer)))
+            {
+                layers[layerKey] = new List<Node>();
+            }
+
             foreach (Node node in _nodes)
             {
-                node.Draw(spriteBatch);
+                if (node.Layer != Layer.none)
+                    layers[node.Layer].Add(node);
+
+                foreach (Node child in node.GetAllChildren())
+                {
+                    if (child.Layer != Layer.none)
+                        layers[child.Layer].Add(child);
+                }
             }
+
+            foreach (Layer layerKey in Enum.GetValues(typeof(Layer)))
+            {
+                foreach (Node node in layers[layerKey])
+                {
+                    node.Draw(spriteBatch);
+                }
+            }
+
             spriteBatch.End();
         }
     }

@@ -14,14 +14,15 @@ namespace Color_Breaker
         public Ball(float x, float y) : base(new Vector2(x,y))
         {
             IAssets assets = Services.Get<IAssets>();
-            SpriteNode sprite = new SpriteNode(0, 0, Color.White, assets.GetAsset<Texture2D>("Ball"));
-            SpriteNode spriteShadow = new SpriteNode(0, 0, Color.White, assets.GetAsset<Texture2D>("BallShadow"));
+            SpriteNode sprite = new SpriteNode(assets.GetAsset<Texture2D>("Ball"), Layer.props);
+            SpriteNode spriteShadow = new SpriteNode(assets.GetAsset<Texture2D>("BallShadow"), Layer.Shadows);
             sprite.Centered = true;
             spriteShadow.Centered = true;
-            AddChild(spriteShadow);
             AddChild(sprite);
+            sprite.AddChild(spriteShadow);
         }
 
+        
 
     }
 }
