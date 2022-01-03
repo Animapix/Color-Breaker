@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Animapix;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -8,6 +9,7 @@ namespace Color_Breaker
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        private AssetsManager _assetsManager;
 
         public MainGame()
         {
@@ -28,7 +30,9 @@ namespace Color_Breaker
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            _assetsManager = new AssetsManager(Content);
+            _assetsManager.LoadAsset<Texture2D>("Brick");
+            _assetsManager.LoadAsset<Texture2D>("BrickShadow");
         }
 
         protected override void Update(GameTime gameTime)
