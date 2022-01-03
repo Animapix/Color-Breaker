@@ -15,7 +15,7 @@ namespace Color_Breaker
             get
             {
                 if (Parent != null)
-                    return Position + Parent.Position;
+                    return Position + Parent.GlobalPosition;
                 else
                     return Position;
             }
