@@ -6,10 +6,15 @@ using System.Text;
 
 namespace Color_Breaker
 {
-    public sealed class SceneManager
+    public sealed class SceneManager : ISceneManager
     {
         private Scene _currentScene;
         private Dictionary<Scenes, Scene> scenes = new Dictionary<Scenes, Scene>();
+
+        public SceneManager()
+        {
+            Services.RegisterService<ISceneManager>(this);
+        }
 
         public void Register(Scenes sceneType, Scene scene)
         {

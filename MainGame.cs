@@ -11,6 +11,7 @@ namespace Color_Breaker
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        private Inputs _inputs;
         private AssetsManager _assetsManager;
         private SceneManager _sceneManager;
         private ScreenManager _screenManager;
@@ -20,6 +21,7 @@ namespace Color_Breaker
         {
             _graphics = new GraphicsDeviceManager(this);
             _sceneManager = new SceneManager();
+            _inputs = new Inputs();
             _levelsData = new LevelsData();
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
@@ -31,7 +33,7 @@ namespace Color_Breaker
             _sceneManager.Register(Scenes.Game, new SceneGame());
             _sceneManager.Register(Scenes.Menu, new SceneMenu());
 
-            _screenManager = new ScreenManager(_graphics, 800, 800);
+            _screenManager = new ScreenManager(_graphics, 800, 800, this);
 
             base.Initialize();
         }
@@ -42,6 +44,7 @@ namespace Color_Breaker
 
             _levelsData.LoadLevels("Levels");
 
+            // Load images
             _assetsManager = new AssetsManager(Content);
             _assetsManager.LoadAsset<Texture2D>("Brick");
             _assetsManager.LoadAsset<Texture2D>("BrickShadow");
@@ -56,8 +59,13 @@ namespace Color_Breaker
             _assetsManager.LoadAsset<Texture2D>("WallH");
             _assetsManager.LoadAsset<Texture2D>("WallShadowH");
             _assetsManager.LoadAsset<Texture2D>("Background");
+            _assetsManager.LoadAsset<Texture2D>("SelectionRect");
 
-            _sceneManager.Load(Scenes.Game);
+            // Load fonts
+            _assetsManager.LoadAsset<SpriteFont>("MainFont24");
+
+
+            _sceneManager.Load(Scenes.Menu);
         }
 
         protected override void Update(GameTime gameTime)
@@ -66,6 +74,7 @@ namespace Color_Breaker
                 Exit();
             _sceneManager.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
             base.Update(gameTime);
+            _inputs.UpdateState();
         }
 
         protected override void Draw(GameTime gameTime)

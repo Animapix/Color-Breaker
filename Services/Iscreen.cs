@@ -8,5 +8,6 @@ namespace Color_Breaker
         float Height { get; }
         Rectangle Bounds { get; }
         Vector2 Center { get; }
+        void Quit();
     }
 }

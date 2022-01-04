@@ -73,6 +73,13 @@
 /processorParam:TextureFormat=Color
 /build:BrickShadow.png
 
+#begin MainFont24.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:MainFont24.spritefont
+
 #begin PadH.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -120,6 +127,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:PadV.png
+
+#begin SelectionRect.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:SelectionRect.png
 
 #begin WallH.png
 /importer:TextureImporter

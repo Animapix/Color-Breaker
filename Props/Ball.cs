@@ -195,11 +195,11 @@ namespace Color_Breaker
                 Position.Y = bounds.Top + _radius;
             }
 
-            /*if (Position.Y + _radius > bounds.Bottom)
+            if (Position.Y + _radius > bounds.Bottom)
             {
                 _velocity.Y = -_velocity.Y;
                 Position.Y = bounds.Bottom - _radius;
-            }*/
+            }
         }
     }
 }

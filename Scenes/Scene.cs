@@ -1,8 +1,6 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 
 namespace Color_Breaker
-
 {
     public abstract class Scene
     {
@@ -15,11 +13,15 @@ namespace Color_Breaker
 
         public virtual void Update(float deltaTime)
         {
+            if (_nodeTree == null)
+                return;
             _nodeTree.Update(deltaTime);
         }
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
+            if (_nodeTree == null)
+                return;
             _nodeTree.Draw(spriteBatch);
         }
 

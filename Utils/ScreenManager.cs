@@ -4,21 +4,22 @@ namespace Color_Breaker
 {
     public sealed class ScreenManager : IScreen
     {
-        GraphicsDeviceManager graphicsDevice;
+        private GraphicsDeviceManager _graphicsDevice;
+        private Game _game;
 
         public float Width
         {
-            get => graphicsDevice.PreferredBackBufferWidth;
+            get => _graphicsDevice.PreferredBackBufferWidth;
         }
 
         public float Height
         {
-            get => graphicsDevice.PreferredBackBufferHeight;
+            get => _graphicsDevice.PreferredBackBufferHeight;
         }
 
         public Rectangle Bounds
         {
-            get => graphicsDevice.GraphicsDevice.Viewport.Bounds;
+            get => _graphicsDevice.GraphicsDevice.Viewport.Bounds;
         }
 
         public Vector2 Center
@@ -26,15 +27,20 @@ namespace Color_Breaker
             get => new Vector2(Width / 2, Height / 2);
         }
 
-        public ScreenManager(GraphicsDeviceManager device, int width, int height)
+        public ScreenManager(GraphicsDeviceManager device, int width, int height, Game game)
         {
-            graphicsDevice = device;
-
-            graphicsDevice.PreferredBackBufferWidth = width;
-            graphicsDevice.PreferredBackBufferHeight = height;
-            graphicsDevice.ApplyChanges();
+            _graphicsDevice = device;
+            _game = game;
+            _graphicsDevice.PreferredBackBufferWidth = width;
+            _graphicsDevice.PreferredBackBufferHeight = height;
+            _graphicsDevice.ApplyChanges();
 
             Services.RegisterService<IScreen>(this);
+        }
+
+        public void Quit()
+        {
+            _game.Exit();
         }
     }
 }
