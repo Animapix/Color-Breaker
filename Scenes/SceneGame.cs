@@ -17,16 +17,17 @@ namespace Color_Breaker
             IAssets assets = Services.Get<IAssets>();
             IScreen screen = Services.Get<IScreen>();
 
+            // Add Background sprite
             SpriteNode background = new SpriteNode(assets.GetAsset<Texture2D>("Background"), Layer.Background);
             background.Centered = true;
             background.Position = screen.Center;
             _nodeTree.Add(background);
 
+            // Add wall sprites
             Wall wallTop = new Wall(screen.Center.X, 90, Side.Top);
             Wall wallLeft = new Wall(90, screen.Center.Y, Side.Left);
             Wall wallBottom = new Wall(screen.Center.X, screen.Height - 90, Side.Bottom);
             Wall wallRight = new Wall(screen.Width - 90, screen.Center.Y, Side.Right);
-
             _nodeTree.Add(wallLeft);
             _nodeTree.Add(wallRight);
             _nodeTree.Add(wallBottom);
@@ -34,6 +35,7 @@ namespace Color_Breaker
 
             LoadLevel();
 
+            // Add ball
             Ball ball = new Ball(screen.Center.X, screen.Center.Y, new Rectangle(100, 100, 600, 600));
             _nodeTree.Add(ball);
         }
@@ -53,10 +55,15 @@ namespace Color_Breaker
         {
             IScreen screen = Services.Get<IScreen>();
             Brick brick = new Brick();
+
+            // Offset to center all bricks in screen
             float x = (screen.Width - columns * (brick.Width + margin)) / 2 + margin/2;
             float y = (screen.Height - rows * (brick.Height + margin)) / 2 + margin/2;
+
+            // Set Position and color
             brick.Position = new Vector2((brick.Width + margin) * column + x, (brick.Height + margin) * row + y);
             brick.Color = color;
+
             _nodeTree.Add(brick);
         }
     }
