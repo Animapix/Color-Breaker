@@ -8,7 +8,7 @@ namespace Color_Breaker
         public Color Color;
         public bool Centered = false;
 
-        private Texture2D _texture;
+        protected Texture2D _texture;
         private (int horizontal, int vertical) _split;
 
         public int Width      { get => _texture.Width  / _split.horizontal; }

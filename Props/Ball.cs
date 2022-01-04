@@ -7,7 +7,7 @@ namespace Color_Breaker
     public sealed class Ball : SpriteNode
     {
 
-        private Vector2 _velocity = new Vector2(-400, 600);
+        private Vector2 _velocity = new Vector2(300, 250);
         private const float _speed = 400;
         private const float _radius = 10;
         private Rectangle _bounds;
@@ -38,26 +38,18 @@ namespace Color_Breaker
                 if (IsIntersect(pad.Position, pad.Width, pad.Height))
                 {
                     Sides collisionSide = getSideCollision(pad.Position, pad.Width, pad.Height);
+                    Position -= Vector2.Normalize(_velocity);
                     switch (collisionSide)
                     {
                         case Sides.Left:
-                            _velocity.X = -_velocity.X;
-                            Position.X = pad.Left - _radius;
-                            break;
                         case Sides.Right:
                             _velocity.X = -_velocity.X;
-                            Position.X = pad.Right + _radius;
                             break;
                         case Sides.Bottom:
-                            _velocity.Y = -_velocity.Y;
-                            Position.Y = pad.Bottom + _radius;
-                            break;
                         case Sides.Top:
                             _velocity.Y = -_velocity.Y;
-                            Position.Y = pad.Top - _radius;
                             break;
                     }
-                    //pad.Hit(this, collisionSide);
                     return;
                 }
             }
@@ -72,6 +64,7 @@ namespace Color_Breaker
                 if (IsIntersect(testedBrick.Position, testedBrick.Width, testedBrick.Height))
                 {
                     Sides collisionSide = getSideCollision(testedBrick.Position, testedBrick.Width, testedBrick.Height);
+                    Position -= Vector2.Normalize(_velocity);
                     switch (collisionSide)
                     {
                         case Sides.Left:
@@ -161,7 +154,7 @@ namespace Color_Breaker
                     cy = rectPosition.Y + rectHeight - Position.Y;
                     if (cx >= 0)
                         return Sides.Bottom;
-                    else if (cy / cx < slope)
+                    else if (cy / cx > slope)
                         return Sides.Bottom;
                     else
                         return Sides.Right;
@@ -196,11 +189,11 @@ namespace Color_Breaker
                 Position.X = bounds.Right - _radius;
             }
 
-            /*if (Position.Y - _radius < bounds.Top)
+            if (Position.Y - _radius < bounds.Top)
             {
                 _velocity.Y = -_velocity.Y;
                 Position.Y = bounds.Top + _radius;
-            }*/
+            }
 
             /*if (Position.Y + _radius > bounds.Bottom)
             {

@@ -47,8 +47,10 @@ namespace Color_Breaker
             _assetsManager.LoadAsset<Texture2D>("BrickShadow");
             _assetsManager.LoadAsset<Texture2D>("Ball");
             _assetsManager.LoadAsset<Texture2D>("BallShadow");
-            _assetsManager.LoadAsset<Texture2D>("Pad");
-            _assetsManager.LoadAsset<Texture2D>("PadShadow");
+            _assetsManager.LoadAsset<Texture2D>("PadH");
+            _assetsManager.LoadAsset<Texture2D>("PadShadowH");
+            _assetsManager.LoadAsset<Texture2D>("PadV");
+            _assetsManager.LoadAsset<Texture2D>("PadShadowV");
             _assetsManager.LoadAsset<Texture2D>("WallV");
             _assetsManager.LoadAsset<Texture2D>("WallShadowV");
             _assetsManager.LoadAsset<Texture2D>("WallH");
