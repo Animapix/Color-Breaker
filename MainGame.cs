@@ -32,6 +32,7 @@ namespace Color_Breaker
         {
             _sceneManager.Register(Scenes.Game, new SceneGame());
             _sceneManager.Register(Scenes.Menu, new SceneMenu());
+            _sceneManager.Register(Scenes.LevelSelection, new SceneLevelSelection());
 
             _screenManager = new ScreenManager(_graphics, 800, 800, this);
 
@@ -60,9 +61,11 @@ namespace Color_Breaker
             _assetsManager.LoadAsset<Texture2D>("WallShadowH");
             _assetsManager.LoadAsset<Texture2D>("Background");
             _assetsManager.LoadAsset<Texture2D>("SelectionRect");
+            _assetsManager.LoadAsset<Texture2D>("SelectionRect2");
 
             // Load fonts
             _assetsManager.LoadAsset<SpriteFont>("MainFont24");
+            _assetsManager.LoadAsset<SpriteFont>("MainFont12");
 
 
             _sceneManager.Load(Scenes.Menu);

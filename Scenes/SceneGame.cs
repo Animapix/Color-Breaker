@@ -75,7 +75,8 @@ namespace Color_Breaker
 
         private void LoadLevel()
         {
-            LevelData level = Services.Get<ILevels>().GetLevel(0);
+            ILevels levelsData = Services.Get<ILevels>();
+            LevelData level = levelsData.GetLevel(levelsData.CurrentLevel);
             for (int column = 0; column < level.bricks.Count; column++)
             {
                 for (int row = 0; row < level.bricks[column].Count; row++)

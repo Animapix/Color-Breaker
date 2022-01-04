@@ -71,7 +71,7 @@ namespace Color_Breaker
                 switch (_selectedItem)
                 {
                     case 0:
-                        Services.Get<ISceneManager>().Load(Scenes.Game);
+                        Services.Get<ISceneManager>().Load(Scenes.LevelSelection);
                         break;
                     default:
                         Services.Get<IScreen>().Quit();

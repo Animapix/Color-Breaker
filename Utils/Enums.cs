@@ -14,7 +14,8 @@ public enum Sides
 public enum Scenes
 {
     Menu,
-    Game
+    Game,
+    LevelSelection
 }
 
 public enum Layers

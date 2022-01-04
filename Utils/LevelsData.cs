@@ -11,6 +11,8 @@ namespace Color_Breaker
     {
         List<LevelData> _levels;
 
+        public int CurrentLevel { get; set; }
+
         public LevelsData()
         {
             _levels = new List<LevelData>();
@@ -26,13 +28,17 @@ namespace Color_Breaker
                 stream = new MemoryStream(Encoding.UTF8.GetBytes(File.ReadAllText(fileEntries[i])));
                 DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(LevelData));
                 _levels.Add((LevelData)ser.ReadObject(stream));
-                Debug.WriteLine(fileEntries[i]);
             }
         }
 
         public LevelData GetLevel(int levelNumber)
         {
             return _levels[levelNumber];
+        }
+
+        public List<LevelData> GetLevels()
+        {
+            return _levels;
         }
     }
 
@@ -41,6 +47,8 @@ namespace Color_Breaker
     [DataContract]
     public class LevelData
     {
+        [DataMember]
+        public string name { get; private set; }
         [DataMember]
         public List<List<int>> bricks { get; private set; }
     }
