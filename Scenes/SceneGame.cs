@@ -36,17 +36,19 @@ namespace Color_Breaker
             LoadLevel();
 
             // Add ball
-            Ball ball = new Ball(screen.Center.X, screen.Center.Y, new Rectangle(100, 100, 600, 600));
+            Ball ball = new Ball(150, 150, new Rectangle(100, 100, 600, 600));
             _nodeTree.Add(ball);
         }
 
         private void LoadLevel()
         {
-            for (int column = 0; column < columns; column++)
+            LevelData level = Services.Get<ILevels>().GetLevel(0);
+            for (int column = 0; column < level.bricks.Count; column++)
             {
-                for (int row = 0; row < rows; row++)
+                for (int row = 0; row < level.bricks[column].Count; row++)
                 {
-                    AddNewBrick(column, row, 4, Color.White);
+                    if(level.bricks[column][row] != 0)
+                        AddNewBrick(column, row, 4, Color.White);
                 }
             }
         }

@@ -14,11 +14,13 @@ namespace Color_Breaker
         private AssetsManager _assetsManager;
         private SceneManager _sceneManager;
         private ScreenManager _screenManager;
+        private LevelsData _levelsData;
 
         public MainGame()
         {
             _graphics = new GraphicsDeviceManager(this);
             _sceneManager = new SceneManager();
+            _levelsData = new LevelsData();
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
             IsFixedTimeStep = false;
@@ -38,17 +40,20 @@ namespace Color_Breaker
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            _levelsData.LoadLevels("Levels");
+
             _assetsManager = new AssetsManager(Content);
             _assetsManager.LoadAsset<Texture2D>("Brick");
             _assetsManager.LoadAsset<Texture2D>("BrickShadow");
             _assetsManager.LoadAsset<Texture2D>("Ball");
             _assetsManager.LoadAsset<Texture2D>("BallShadow");
-            _assetsManager.LoadAsset<Texture2D>("Background");
-
+            _assetsManager.LoadAsset<Texture2D>("Pad");
+            _assetsManager.LoadAsset<Texture2D>("PadShadow");
             _assetsManager.LoadAsset<Texture2D>("WallV");
             _assetsManager.LoadAsset<Texture2D>("WallShadowV");
             _assetsManager.LoadAsset<Texture2D>("WallH");
             _assetsManager.LoadAsset<Texture2D>("WallShadowH");
+            _assetsManager.LoadAsset<Texture2D>("Background");
 
             _sceneManager.Load(SceneType.Game);
         }
