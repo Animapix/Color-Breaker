@@ -29,7 +29,7 @@ namespace Color_Breaker
             _sceneManager.Register(SceneType.Game, new SceneGame());
             _sceneManager.Register(SceneType.Menu, new SceneMenu());
 
-            _screenManager = new ScreenManager(_graphics, 1600, 900);
+            _screenManager = new ScreenManager(_graphics, 800, 800);
 
             base.Initialize();
         }
@@ -45,11 +45,10 @@ namespace Color_Breaker
             _assetsManager.LoadAsset<Texture2D>("BallShadow");
             _assetsManager.LoadAsset<Texture2D>("Background");
 
-            _assetsManager.LoadAsset<Texture2D>("Wall_H");
-            _assetsManager.LoadAsset<Texture2D>("Wall_V");
-            _assetsManager.LoadAsset<Texture2D>("Wall_H_Shadow");
-            _assetsManager.LoadAsset<Texture2D>("Wall_V_Shadow");
-
+            _assetsManager.LoadAsset<Texture2D>("WallV");
+            _assetsManager.LoadAsset<Texture2D>("WallShadowV");
+            _assetsManager.LoadAsset<Texture2D>("WallH");
+            _assetsManager.LoadAsset<Texture2D>("WallShadowH");
 
             _sceneManager.Load(SceneType.Game);
         }
@@ -58,7 +57,7 @@ namespace Color_Breaker
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-            _sceneManager.Update(gameTime);
+            _sceneManager.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
             base.Update(gameTime);
         }
 

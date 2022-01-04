@@ -9,6 +9,7 @@ namespace Color_Breaker
         public Node Parent { get; private set; }
         public List<Node> Children { get; private set; }
         public Layer Layer = Layer.none;
+        public bool Free = false;
 
         public Vector2 Position;
         public Vector2 GlobalPosition
@@ -20,8 +21,6 @@ namespace Color_Breaker
                 else
                     return Position;
             }
-
-            
         }
 
         public Node() : this(Vector2.Zero) { }
@@ -52,11 +51,19 @@ namespace Color_Breaker
             return result;
         }
 
-        public virtual void Update(GameTime gameTime)
+        public virtual void Update(float deltaTime)
         {
             foreach (Node child in Children)
             {
-                child.Update(gameTime);
+                child.Update(deltaTime);
+            }
+        }
+
+        public virtual void UpdatePhysics(float deltaTime)
+        {
+            foreach (Node child in Children)
+            {
+                child.UpdatePhysics(deltaTime);
             }
         }
 

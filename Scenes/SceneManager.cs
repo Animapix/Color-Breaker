@@ -28,10 +28,10 @@ namespace Color_Breaker
         }
 
 
-        public void Update(GameTime gameTime)
+        public void Update(float deltaTime)
         {
             if (_currentScene == null) return;
-            _currentScene.Update(gameTime);
+            _currentScene.Update(deltaTime);
         }
 
         public void Draw(SpriteBatch spriteBatch)

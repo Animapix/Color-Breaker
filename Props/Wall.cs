@@ -10,12 +10,12 @@ namespace Color_Breaker
         {
             IAssets assets = Services.Get<IAssets>();
 
-            Texture2D texture = assets.GetAsset<Texture2D>("Wall_V");
-            Texture2D shadowTexture = assets.GetAsset<Texture2D>("Wall_V_Shadow");
+            Texture2D texture = assets.GetAsset<Texture2D>("WallV");
+            Texture2D shadowTexture = assets.GetAsset<Texture2D>("WallShadowV");
             if (side == Side.Bottom || side == Side.Top)
             {
-                texture = assets.GetAsset<Texture2D>("Wall_H");
-                shadowTexture = assets.GetAsset<Texture2D>("Wall_H_Shadow");
+                texture = assets.GetAsset<Texture2D>("WallH");
+                shadowTexture = assets.GetAsset<Texture2D>("WallShadowH");
             }
 
             SpriteNode wallSprite = new SpriteNode(texture, Layer.props);

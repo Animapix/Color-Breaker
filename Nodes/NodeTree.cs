@@ -1,6 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System.Diagnostics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System;
 
@@ -20,11 +18,45 @@ namespace Color_Breaker
             _nodes.Add(node);
         }
 
-        public void Update(GameTime gameTime)
+        public List<T> GetNodes<T>()
         {
+            List<T> nodes = new List<T>();
+
+            foreach (Object node in _nodes)
+            {
+                if (node.GetType() == typeof(T))
+                    nodes.Add((T)node);
+
+                foreach (Object child in ((Node)node).GetAllChildren())
+                {
+                    if (child.GetType() == typeof(T))
+                        nodes.Add((T)child);
+                }
+            }
+            return nodes;
+        }
+
+        public void Update(float deltaTime)
+        {
+            float dtDiv = deltaTime / 100;
+            for (int i = 0; i < 100; i++)
+            {
+                foreach (Node node in _nodes)
+                {
+                    node.UpdatePhysics(dtDiv);
+                }
+            }
+            
+
             foreach (Node node in _nodes)
             {
-                node.Update(gameTime);
+                node.Update(deltaTime);
+            }
+
+            for (int i = _nodes.Count - 1 ; i >= 0; i--)
+            {
+                if (_nodes[i].Free)
+                    _nodes.RemoveAt(i);
             }
         }
 
@@ -33,8 +65,6 @@ namespace Color_Breaker
         {
 
             spriteBatch.Begin();
-
-            
 
             Dictionary<Layer, List<Node>> layers = new Dictionary<Layer, List<Node>>();
             foreach (Layer layerKey in Enum.GetValues(typeof(Layer)))

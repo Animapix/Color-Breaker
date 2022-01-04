@@ -13,9 +13,9 @@ namespace Color_Breaker
             _nodeTree = new NodeTree();
         }
 
-        public virtual void Update(GameTime gameTime)
+        public virtual void Update(float deltaTime)
         {
-            _nodeTree.Update(gameTime);
+            _nodeTree.Update(deltaTime);
         }
 
         public virtual void Draw(SpriteBatch spriteBatch)
