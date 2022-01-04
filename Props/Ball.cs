@@ -12,10 +12,10 @@ namespace Color_Breaker
         private const float _radius = 10;
         private Rectangle _bounds;
 
-        public Ball(float x, float y, Rectangle bounds) : base(Services.Get<IAssets>().GetAsset<Texture2D>("Ball"), x, y, Layer.props,Color.White)
+        public Ball(float x, float y, Rectangle bounds) : base(Services.Get<IAssets>().GetAsset<Texture2D>("Ball"), x, y, Layers.Props,Color.White)
         {
             Centered = true;
-            SpriteNode spriteShadow = new SpriteNode(Services.Get<IAssets>().GetAsset<Texture2D>("BallShadow"), Layer.Shadows);
+            SpriteNode spriteShadow = new SpriteNode(Services.Get<IAssets>().GetAsset<Texture2D>("BallShadow"), Layers.Shadows);
             spriteShadow.Centered = true;
             AddChild(spriteShadow);
             _bounds = bounds;
@@ -25,8 +25,42 @@ namespace Color_Breaker
         {
             Position += _velocity * deltaTime;
             CheckBricksCollisions(Services.Get<INodeTree>().GetNodes<Brick>());
+            CheckPadsCollisions(Services.Get<INodeTree>().GetNodes<Pad>());
             CheckingBounds(_bounds);
             base.UpdatePhysics(deltaTime);
+        }
+
+        public void CheckPadsCollisions(List<Pad> pads)
+        {
+            for (int i = 0; i < pads.Count; i++)
+            {
+                Pad pad = pads[i];
+                if (IsIntersect(pad.Position, pad.Width, pad.Height))
+                {
+                    Sides collisionSide = getSideCollision(pad.Position, pad.Width, pad.Height);
+                    switch (collisionSide)
+                    {
+                        case Sides.Left:
+                            _velocity.X = -_velocity.X;
+                            Position.X = pad.Left - _radius;
+                            break;
+                        case Sides.Right:
+                            _velocity.X = -_velocity.X;
+                            Position.X = pad.Right + _radius;
+                            break;
+                        case Sides.Bottom:
+                            _velocity.Y = -_velocity.Y;
+                            Position.Y = pad.Bottom + _radius;
+                            break;
+                        case Sides.Top:
+                            _velocity.Y = -_velocity.Y;
+                            Position.Y = pad.Top - _radius;
+                            break;
+                    }
+                    //pad.Hit(this, collisionSide);
+                    return;
+                }
+            }
         }
 
         public void CheckBricksCollisions(List<Brick> bricks)
@@ -37,27 +71,18 @@ namespace Color_Breaker
 
                 if (IsIntersect(testedBrick.Position, testedBrick.Width, testedBrick.Height))
                 {
-                    Side collisionSide = getSideCollision(testedBrick.Position, testedBrick.Width, testedBrick.Height);
+                    Sides collisionSide = getSideCollision(testedBrick.Position, testedBrick.Width, testedBrick.Height);
                     switch (collisionSide)
                     {
-                        case Side.Left:
+                        case Sides.Left:
+                        case Sides.Right:
                             _velocity.X = -_velocity.X;
-                            //Position.X = testedBrick.Sides.Left - Radius - 1;
                             break;
-                        case Side.Right:
-                            _velocity.X = -_velocity.X;
-                            //Position.X = testedBrick.Sides.Right + Radius + 1;
-                            break;
-                        case Side.Bottom:
+                        case Sides.Bottom:
+                        case Sides.Top:
                             _velocity.Y = -_velocity.Y;
-                            //Position.Y = testedBrick.Sides.Bottom + Radius + 1;
-                            break;
-                        case Side.Top:
-                            _velocity.Y = -_velocity.Y;
-                            //Position.Y = testedBrick.Sides.Top - Radius - 1;
                             break;
                     }
-
                     testedBrick.Hit(this, collisionSide);
 
                     return;
@@ -87,21 +112,21 @@ namespace Color_Breaker
             return true;
         }
 
-        private Side getSideCollision(Vector2 rectPosition, float rectWidth, float rectHeight)
+        private Sides getSideCollision(Vector2 rectPosition, float rectWidth, float rectHeight)
         {
             if (_velocity.X == 0)
             {
                 if (_velocity.Y > 0)
-                    return Side.Top;
+                    return Sides.Top;
                 else
-                    return Side.Bottom;
+                    return Sides.Bottom;
             }
             else if (_velocity.Y == 0)
             {
                 if (_velocity.X > 0)
-                    return Side.Left;
+                    return Sides.Left;
                 else
-                    return Side.Right;
+                    return Sides.Right;
             }
             else
             {
@@ -113,44 +138,44 @@ namespace Color_Breaker
                     cx = rectPosition.X - Position.X;
                     cy = rectPosition.Y - Position.Y;
                     if (cx <= 0)
-                        return Side.Top;
+                        return Sides.Top;
                     else if (cy / cx < slope)
-                        return Side.Left;
+                        return Sides.Left;
                     else
-                        return Side.Top;
+                        return Sides.Top;
                 }
                 else if (slope < 0 && _velocity.X > 0) // Ball moving up right
                 {
                     cx = rectPosition.X - Position.X;
                     cy = rectPosition.Y + rectHeight - Position.Y;
                     if (cx <= 0)
-                        return Side.Bottom;
+                        return Sides.Bottom;
                     else if (cy / cx < slope)
-                        return Side.Bottom;
+                        return Sides.Bottom;
                     else
-                        return Side.Left;
+                        return Sides.Left;
                 }
                 else if (slope > 0 && _velocity.X < 0) // Ball moving up left
                 {
                     cx = rectPosition.X + rectWidth - Position.X;
                     cy = rectPosition.Y + rectHeight - Position.Y;
                     if (cx >= 0)
-                        return Side.Bottom;
+                        return Sides.Bottom;
                     else if (cy / cx < slope)
-                        return Side.Bottom;
+                        return Sides.Bottom;
                     else
-                        return Side.Right;
+                        return Sides.Right;
                 }
                 else // Ball moving down left
                 {
                     cx = rectPosition.X + rectWidth - Position.X;
                     cy = rectPosition.Y - Position.Y;
                     if (cx >= 0)
-                        return Side.Top;
+                        return Sides.Top;
                     else if (cy / cx < slope)
-                        return Side.Top;
+                        return Sides.Top;
                     else
-                        return Side.Right;
+                        return Sides.Right;
                 }
 
             }
@@ -171,17 +196,17 @@ namespace Color_Breaker
                 Position.X = bounds.Right - _radius;
             }
 
-            if (Position.Y - _radius < bounds.Top)
+            /*if (Position.Y - _radius < bounds.Top)
             {
                 _velocity.Y = -_velocity.Y;
                 Position.Y = bounds.Top + _radius;
-            }
+            }*/
 
-            if (Position.Y + _radius > bounds.Bottom)
+            /*if (Position.Y + _radius > bounds.Bottom)
             {
                 _velocity.Y = -_velocity.Y;
                 Position.Y = bounds.Bottom - _radius;
-            }
+            }*/
         }
     }
 }

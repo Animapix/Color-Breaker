@@ -8,7 +8,7 @@ namespace Color_Breaker
     {
         public Node Parent { get; private set; }
         public List<Node> Children { get; private set; }
-        public Layer Layer = Layer.none;
+        public Layers Layer = Layers.None;
         public bool Free = false;
 
         public Vector2 Position;
@@ -24,8 +24,8 @@ namespace Color_Breaker
         }
 
         public Node() : this(Vector2.Zero) { }
-        public Node(Layer layer) : this(Vector2.Zero, layer) { }
-        public Node(Vector2 position, Layer layer = Layer.none)
+        public Node(Layers layer) : this(Vector2.Zero, layer) { }
+        public Node(Vector2 position, Layers layer = Layers.None)
         {
             Position = position;
             Children = new List<Node>();

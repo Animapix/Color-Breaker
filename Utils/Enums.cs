@@ -1,22 +1,25 @@
 ﻿
-public enum Side
+public enum Sides
 {
+    None,
     Left,
     Top,
     Right,
-    Bottom
+    Bottom,
+    Vertical,
+    Horizontal
 }
 
-public enum SceneType
+public enum Scenes
 {
     Menu,
     Game
 }
 
-public enum Layer
+public enum Layers
 {
-    none,
+    None,
     Background,
     Shadows,
-    props
+    Props
 }

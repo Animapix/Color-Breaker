@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -18,26 +19,54 @@ namespace Color_Breaker
             IScreen screen = Services.Get<IScreen>();
 
             // Add Background sprite
-            SpriteNode background = new SpriteNode(assets.GetAsset<Texture2D>("Background"), Layer.Background);
+            SpriteNode background = new SpriteNode(assets.GetAsset<Texture2D>("Background"), Layers.Background);
             background.Centered = true;
             background.Position = screen.Center;
             _nodeTree.Add(background);
 
             // Add wall sprites
-            Wall wallTop = new Wall(screen.Center.X, 90, Side.Top);
-            Wall wallLeft = new Wall(90, screen.Center.Y, Side.Left);
-            Wall wallBottom = new Wall(screen.Center.X, screen.Height - 90, Side.Bottom);
-            Wall wallRight = new Wall(screen.Width - 90, screen.Center.Y, Side.Right);
+            Wall wallTop = new Wall(screen.Center.X, 90, Sides.Top);
+            Wall wallLeft = new Wall(90, screen.Center.Y, Sides.Left);
+            Wall wallBottom = new Wall(screen.Center.X, screen.Height - 90, Sides.Bottom);
+            Wall wallRight = new Wall(screen.Width - 90, screen.Center.Y, Sides.Right);
             _nodeTree.Add(wallLeft);
             _nodeTree.Add(wallRight);
-            _nodeTree.Add(wallBottom);
-            _nodeTree.Add(wallTop);
+            //_nodeTree.Add(wallBottom);
+            //_nodeTree.Add(wallTop);
 
             LoadLevel();
 
             // Add ball
             Ball ball = new Ball(150, 150, new Rectangle(100, 100, 600, 600));
             _nodeTree.Add(ball);
+
+
+            _nodeTree.Add(new Pad(Sides.Bottom));
+
+            _nodeTree.Add(new Pad(Sides.Top));
+        }
+
+
+        public override void Update(float deltaTime)
+        {
+            base.Update(deltaTime);
+
+            IScreen screen = Services.Get<IScreen>();
+
+
+            foreach (Ball ball in _nodeTree.GetNodes<Ball>())
+            {
+                if( ball.Position.X < screen.Bounds.Left  || 
+                    ball.Position.X > screen.Bounds.Right ||
+                    ball.Position.Y < screen.Bounds.Top   ||
+                    ball.Position.Y > screen.Bounds.Bottom)
+                {
+
+                    ball.Free = true;
+                    _nodeTree.Add(new Ball(150, 150, new Rectangle(100, 100, 600, 600)));
+                }
+            }
+
         }
 
         private void LoadLevel()

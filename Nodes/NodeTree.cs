@@ -38,8 +38,8 @@ namespace Color_Breaker
 
         public void Update(float deltaTime)
         {
-            float dtDiv = deltaTime / 100;
-            for (int i = 0; i < 100; i++)
+            float dtDiv = deltaTime / 50;
+            for (int i = 0; i < 50; i++)
             {
                 foreach (Node node in _nodes)
                 {
@@ -66,25 +66,25 @@ namespace Color_Breaker
 
             spriteBatch.Begin();
 
-            Dictionary<Layer, List<Node>> layers = new Dictionary<Layer, List<Node>>();
-            foreach (Layer layerKey in Enum.GetValues(typeof(Layer)))
+            Dictionary<Layers, List<Node>> layers = new Dictionary<Layers, List<Node>>();
+            foreach (Layers layerKey in Enum.GetValues(typeof(Layers)))
             {
                 layers[layerKey] = new List<Node>();
             }
 
             foreach (Node node in _nodes)
             {
-                if (node.Layer != Layer.none)
+                if (node.Layer != Layers.None)
                     layers[node.Layer].Add(node);
 
                 foreach (Node child in node.GetAllChildren())
                 {
-                    if (child.Layer != Layer.none)
+                    if (child.Layer != Layers.None)
                         layers[child.Layer].Add(child);
                 }
             }
 
-            foreach (Layer layerKey in Enum.GetValues(typeof(Layer)))
+            foreach (Layers layerKey in Enum.GetValues(typeof(Layers)))
             {
                 foreach (Node node in layers[layerKey])
                 {

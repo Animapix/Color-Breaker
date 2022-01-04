@@ -67,8 +67,8 @@ namespace Color_Breaker
                     return GlobalPosition.Y + Height;
             }
         }
-        public SpriteNode(Texture2D texture,Layer layer = Layer.none) : this(texture, 0,0,layer,Color.White) { }
-        public SpriteNode(Texture2D texture, float x, float y,Layer layer, Color color)
+        public SpriteNode(Texture2D texture,Layers layer = Layers.None) : this(texture, 0,0,layer,Color.White) { }
+        public SpriteNode(Texture2D texture, float x, float y,Layers layer, Color color)
         {
             Position = new Vector2(x,y);
             Color = color;

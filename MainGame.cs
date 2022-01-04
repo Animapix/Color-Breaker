@@ -28,8 +28,8 @@ namespace Color_Breaker
 
         protected override void Initialize()
         {
-            _sceneManager.Register(SceneType.Game, new SceneGame());
-            _sceneManager.Register(SceneType.Menu, new SceneMenu());
+            _sceneManager.Register(Scenes.Game, new SceneGame());
+            _sceneManager.Register(Scenes.Menu, new SceneMenu());
 
             _screenManager = new ScreenManager(_graphics, 800, 800);
 
@@ -55,7 +55,7 @@ namespace Color_Breaker
             _assetsManager.LoadAsset<Texture2D>("WallShadowH");
             _assetsManager.LoadAsset<Texture2D>("Background");
 
-            _sceneManager.Load(SceneType.Game);
+            _sceneManager.Load(Scenes.Game);
         }
 
         protected override void Update(GameTime gameTime)

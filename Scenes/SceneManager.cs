@@ -9,14 +9,14 @@ namespace Color_Breaker
     public sealed class SceneManager
     {
         private Scene _currentScene;
-        private Dictionary<SceneType, Scene> scenes = new Dictionary<SceneType, Scene>();
+        private Dictionary<Scenes, Scene> scenes = new Dictionary<Scenes, Scene>();
 
-        public void Register(SceneType sceneType, Scene scene)
+        public void Register(Scenes sceneType, Scene scene)
         {
             scenes[sceneType] = scene;
         }
 
-        public void Load(SceneType sceneType)
+        public void Load(Scenes sceneType)
         {
             if (_currentScene != null)
             {
