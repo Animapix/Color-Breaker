@@ -171,22 +171,24 @@ namespace Color_Breaker
             {
                 for (int row = 0; row < level.bricks[column].Count; row++)
                 {
-                    if (level.bricks[column][row] == 1)
+                    Color brickColor;
+                    switch (level.bricks[column][row])
                     {
-                        AddNewBrick(column, row, 4, Color.White, level.bricks[column][row]);
+                        case 2:
+                            brickColor = Color.Red;
+                            break;
+                        case 3:
+                            brickColor = Color.Green;
+                            break;
+                        case 4:
+                            brickColor = Color.Blue;
+                            break;
+                        default:
+                            brickColor = Color.White;
+                            break;
                     }
-                    else if (level.bricks[column][row] == 2)
-                    {
-                        AddNewBrick(column, row, 4, Color.Red, level.bricks[column][row]);
-                    }
-                    else if (level.bricks[column][row] == 3)
-                    {
-                        AddNewBrick(column, row, 4, Color.Green, level.bricks[column][row]);
-                    }
-                    else if (level.bricks[column][row] == 4)
-                    {
-                        AddNewBrick(column, row, 4, Color.Blue, level.bricks[column][row]);
-                    }
+                    if (level.bricks[column][row] > 0)
+                        AddNewBrick(column, row, 4, brickColor, level.bricks[column][row]);
                 }
             }
             _levelSides = level.GetSidesFlag();
@@ -212,9 +214,6 @@ namespace Color_Breaker
             else
                 _nodeTree.Add(new Pad(_bounds,Sides.Bottom));
 
-
-            
-
         }
 
         private void AddNewBrick(int column, int row,float margin, Color color, int type)
@@ -227,9 +226,9 @@ namespace Color_Breaker
             float y = (screen.Height - _rows * (brick.Height + margin)) / 2 + margin/2;
 
             // Set Position and color
-            brick.Position = new Vector2((brick.Width + margin) * column + x, (brick.Height + margin) * row + y);
+            brick.Position = new Vector2((brick.Width + margin) * column + x, -200);
             brick.Color = color;
-
+            brick.Tween.Start(-200,(brick.Height + margin) * row + y,1.0f, _nodeTree.GetNodes<Brick>().Count * 0.05f);
             _nodeTree.Add(brick);
         }
     }

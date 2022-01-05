@@ -6,12 +6,20 @@ namespace Color_Breaker
 {
     public class Brick : SpriteNode
     {
+        public Tween Tween = new Tween();
+
         public Brick(float x = 0, float y = 0) : base(Services.Get<IAssets>().GetAsset<Texture2D>("Brick"), Layers.Props)
         {
             SpriteNode spriteShadow = new SpriteNode(Services.Get<IAssets>().GetAsset<Texture2D>("BrickShadow"), Layers.Shadows);
             spriteShadow.Centered = true;
             spriteShadow.Position = Center;
             AddChild(spriteShadow);
+        }
+
+        public override void Update(float deltaTime)
+        {
+            Position.Y = Tween.easeInOutSine(deltaTime);
+            base.Update(deltaTime);
         }
 
         public virtual void Hit(Ball ball, Sides collisionSide)

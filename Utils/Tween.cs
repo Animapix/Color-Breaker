@@ -11,7 +11,6 @@ namespace Color_Breaker
         private float _duration;
         private float _time;
         private float _delay;
-        private object debug;
 
         public bool isRunning { get; private set; }
 
@@ -44,7 +43,6 @@ namespace Color_Breaker
             
             if (_time <= _duration)
             {
-                Debug.WriteLine(_time);
                 _time += deltaTime;
             }else
             {
