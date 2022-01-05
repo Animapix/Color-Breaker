@@ -60,6 +60,7 @@ namespace Color_Breaker
             _assetsManager.LoadAsset<Texture2D>("WallH");
             _assetsManager.LoadAsset<Texture2D>("WallShadowH");
             _assetsManager.LoadAsset<Texture2D>("Background");
+            _assetsManager.LoadAsset<Texture2D>("SoftBlack");
             _assetsManager.LoadAsset<Texture2D>("SelectionRect");
             _assetsManager.LoadAsset<Texture2D>("SelectionRect2");
 

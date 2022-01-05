@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace Color_Breaker
 {
@@ -37,10 +36,6 @@ namespace Color_Breaker
             _nodeTree.Add(background);
             LoadLevel();
 
-            LabelNode label = new LabelNode("100000",new Rectangle(0,0,900,100), assets.GetAsset<SpriteFont>("MainFont24"), Color.White, Layers.GUI);
-            label.Position = new Vector2(screen.Width/2, 50);
-            _nodeTree.Add(label);
-
             _lifes = 3;
             _currenteState = GameState.play;
         }
@@ -71,6 +66,22 @@ namespace Color_Breaker
                         else
                         {
                             // GameOver
+                            IAssets assets = Services.Get<IAssets>();
+
+                            SpriteNode softBalck = new SpriteNode(assets.GetAsset<Texture2D>("SoftBlack"), Layers.Background);
+                            softBalck.Centered = true;
+                            softBalck.Position = screen.Center;
+                            _nodeTree.Add(softBalck);
+
+                            LabelNode label = new LabelNode("GAMEOVER", new Rectangle(0, 0, 900, 900), assets.GetAsset<SpriteFont>("MainFont24"), Color.White, Layers.GUI);
+                            label.Position = screen.Center;
+                            _nodeTree.Add(label);
+
+                            LabelNode infos = new LabelNode("Press enter", new Rectangle(0, 0, 900, 900), assets.GetAsset<SpriteFont>("MainFont12"), Color.White, Layers.GUI);
+                            infos.Position.X = screen.Center.X;
+                            infos.Position.Y = screen.Bounds.Bottom - 50;
+                            _nodeTree.Add(infos);
+
                             _currenteState = GameState.gameOver;
                             Pause(true);
                         }
@@ -79,6 +90,23 @@ namespace Color_Breaker
 
                     if (_nodeTree.GetNodes<Brick>().Count == 0)
                     {
+                        // Win
+                        IAssets assets = Services.Get<IAssets>();
+
+                        SpriteNode softBalck = new SpriteNode(assets.GetAsset<Texture2D>("SoftBlack"), Layers.Background);
+                        softBalck.Centered = true;
+                        softBalck.Position = screen.Center;
+                        _nodeTree.Add(softBalck);
+
+                        LabelNode label = new LabelNode("WINNER", new Rectangle(0, 0, 900, 900), assets.GetAsset<SpriteFont>("MainFont24"), Color.White, Layers.GUI);
+                        label.Position = screen.Center;
+                        _nodeTree.Add(label);
+
+                        LabelNode infos = new LabelNode("Press enter", new Rectangle(0, 0, 900, 900), assets.GetAsset<SpriteFont>("MainFont12"), Color.White, Layers.GUI);
+                        infos.Position.X = screen.Center.X;
+                        infos.Position.Y = screen.Bounds.Bottom - 50;
+                        _nodeTree.Add(infos);
+
                         _currenteState = GameState.win;
                         Pause(true);
                     }

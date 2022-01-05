@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Diagnostics;
 
 namespace Color_Breaker
 {
@@ -18,7 +17,7 @@ namespace Color_Breaker
         {
             if (ball.Color == Color || Color == Color.White)
             {
-                ParticleEmiterNode emiter = new ParticleEmiterNode(Services.Get<IAssets>().GetAsset<Texture2D>("Brick"));
+                ParticleEmiterNode emiter = new ParticleEmiterNode(Services.Get<IAssets>().GetAsset<Texture2D>("Brick"), Color);
                 emiter.Position = Center;
                 Services.Get<INodeTree>().Add(emiter);
                 Free = true;

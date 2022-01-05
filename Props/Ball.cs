@@ -59,7 +59,7 @@ namespace Color_Breaker
             {
 
                 Free = true;
-                ParticleEmiterNode emiter = new ParticleEmiterNode(Services.Get<IAssets>().GetAsset<Texture2D>("Brick"));
+                ParticleEmiterNode emiter = new ParticleEmiterNode(Services.Get<IAssets>().GetAsset<Texture2D>("Brick"), Color);
                 emiter.Position = Center;
                 Services.Get<INodeTree>().Add(emiter);
             }
