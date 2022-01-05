@@ -10,6 +10,7 @@ namespace Color_Breaker
         public List<Node> Children { get; private set; }
         public Layers Layer = Layers.None;
         public bool Free = false;
+        public bool IsFreezed = false;
 
         public Vector2 Position;
         public Vector2 GlobalPosition
@@ -53,6 +54,7 @@ namespace Color_Breaker
 
         public virtual void Update(float deltaTime)
         {
+            if (IsFreezed) return;
             foreach (Node child in Children)
             {
                 child.Update(deltaTime);
@@ -61,6 +63,7 @@ namespace Color_Breaker
 
         public virtual void UpdatePhysics(float deltaTime)
         {
+            if (IsFreezed) return;
             foreach (Node child in Children)
             {
                 child.UpdatePhysics(deltaTime);

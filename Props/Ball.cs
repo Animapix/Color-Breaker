@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Color_Breaker
 {
@@ -11,23 +12,52 @@ namespace Color_Breaker
         private const float _speed = 400;
         private const float _radius = 10;
         private Rectangle _bounds;
+        private Sides _boundsSides;
 
-        public Ball(float x, float y, Rectangle bounds) : base(Services.Get<IAssets>().GetAsset<Texture2D>("Ball"), x, y, Layers.Props,Color.White)
+
+
+        public Ball(float x, float y, Rectangle bounds, Sides boundsSides) : base(Services.Get<IAssets>().GetAsset<Texture2D>("Ball"), x, y, Layers.Props,Color.White)
         {
             Centered = true;
             SpriteNode spriteShadow = new SpriteNode(Services.Get<IAssets>().GetAsset<Texture2D>("BallShadow"), Layers.Shadows);
             spriteShadow.Centered = true;
             AddChild(spriteShadow);
             _bounds = bounds;
+            _boundsSides = boundsSides;
         }
 
         public override void UpdatePhysics(float deltaTime)
         {
+            if (IsFreezed) return;
             Position += _velocity * deltaTime;
             CheckBricksCollisions(Services.Get<INodeTree>().GetNodes<Brick>());
             CheckPadsCollisions(Services.Get<INodeTree>().GetNodes<Pad>());
             CheckingBounds(_bounds);
             base.UpdatePhysics(deltaTime);
+        }
+
+        public override void Update(float deltaTime)
+        {
+            if (IsFreezed) return;
+            CheckOutOfScreen();
+            base.Update(deltaTime);
+        }
+
+        public void CheckOutOfScreen()
+        {
+            IScreen screen = Services.Get<IScreen>();
+
+            if (Position.X < screen.Bounds.Left ||
+                    Position.X > screen.Bounds.Right ||
+                    Position.Y < screen.Bounds.Top ||
+                    Position.Y > screen.Bounds.Bottom)
+            {
+
+                Free = true;
+                ParticleEmiterNode emiter = new ParticleEmiterNode(Services.Get<IAssets>().GetAsset<Texture2D>("Brick"));
+                emiter.Position = Center;
+                Services.Get<INodeTree>().Add(emiter);
+            }
         }
 
         public void CheckPadsCollisions(List<Pad> pads)
@@ -177,28 +207,40 @@ namespace Color_Breaker
 
         private void CheckingBounds(Rectangle bounds)
         {
-            if (Position.X - _radius < bounds.Left)
-            {
-                _velocity.X = -_velocity.X;
-                Position.X = bounds.Left + _radius;
+            if ((_boundsSides & Sides.Left) == Sides.Left){
+                if (Position.X - _radius < bounds.Left)
+                {
+                    _velocity.X = -_velocity.X;
+                    Position.X = bounds.Left + _radius;
+                }
             }
 
-            if (Position.X + _radius > bounds.Right)
+
+            if ((_boundsSides & Sides.Right) == Sides.Right)
             {
-                _velocity.X = -_velocity.X;
-                Position.X = bounds.Right - _radius;
+                if (Position.X + _radius > bounds.Right)
+                {
+                    _velocity.X = -_velocity.X;
+                    Position.X = bounds.Right - _radius;
+                }
             }
 
-            if (Position.Y - _radius < bounds.Top)
+            if ((_boundsSides & Sides.Top) == Sides.Top)
             {
-                _velocity.Y = -_velocity.Y;
-                Position.Y = bounds.Top + _radius;
+                if (Position.Y - _radius < bounds.Top)
+                {
+                    _velocity.Y = -_velocity.Y;
+                    Position.Y = bounds.Top + _radius;
+                }
             }
 
-            if (Position.Y + _radius > bounds.Bottom)
-            {
-                _velocity.Y = -_velocity.Y;
-                Position.Y = bounds.Bottom - _radius;
+
+            if ((_boundsSides & Sides.Bottom) == Sides.Bottom){
+                if (Position.Y + _radius > bounds.Bottom)
+                {
+                    _velocity.Y = -_velocity.Y;
+                    Position.Y = bounds.Bottom - _radius;
+                }
             }
         }
     }

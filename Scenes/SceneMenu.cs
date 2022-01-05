@@ -44,6 +44,9 @@ namespace Color_Breaker
             _selectionRect.Position.X = 400;
             _selectionRect.Position.Y = 500;
             _nodeTree.Add(_selectionRect);
+
+
+            
         }
 
         public override void Update(float deltaTime)

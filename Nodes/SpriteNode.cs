@@ -6,8 +6,9 @@ namespace Color_Breaker
     public class SpriteNode : Node
     {
         public Color Color;
+        public int Frame;
         public bool Centered = false;
-
+        public Vector2 Scale = new Vector2(1, 1);
         protected Texture2D _texture;
         private (int horizontal, int vertical) _split;
 
@@ -71,6 +72,7 @@ namespace Color_Breaker
         public SpriteNode(Texture2D texture, float x, float y,Layers layer, Color color)
         {
             Position = new Vector2(x,y);
+            Frame = 0;
             Color = color;
             Layer = layer;
             _texture = texture;
@@ -82,7 +84,8 @@ namespace Color_Breaker
             Vector2 pos = GlobalPosition;
             if (Centered)
                 pos -= new Vector2(Width / 2, Height / 2);
-            spriteBatch.Draw(_texture, pos, GetCurrentFrameRectangle(0), Color);
+            
+            spriteBatch.Draw(_texture, pos, GetCurrentFrameRectangle(Frame), Color, 0, Vector2.Zero, Scale, SpriteEffects.None, 0);
             base.Draw(spriteBatch);
         }
 

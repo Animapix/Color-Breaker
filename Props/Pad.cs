@@ -43,6 +43,7 @@ namespace Color_Breaker
 
         public override void UpdatePhysics(float deltaTime)
         {
+            if (IsFreezed) return;
             if (_side == Sides.Left || _side == Sides.Right)
             {
                 if (Keyboard.GetState().IsKeyDown(Keys.Up))

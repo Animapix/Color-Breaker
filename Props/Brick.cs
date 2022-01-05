@@ -15,6 +15,9 @@ namespace Color_Breaker
 
         public void Hit(Ball ball, Sides collisionSide)
         {
+            ParticleEmiterNode emiter = new ParticleEmiterNode(Services.Get<IAssets>().GetAsset<Texture2D>("Brick"));
+            emiter.Position = Center;
+            Services.Get<INodeTree>().Add(emiter);
             Free = true;
         }
     }

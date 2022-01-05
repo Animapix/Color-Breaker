@@ -41,17 +41,17 @@ namespace Color_Breaker
             float dtDiv = deltaTime / 50;
             for (int i = 0; i < 50; i++)
             {
-                foreach (Node node in _nodes)
+                for (int j = 0; j < _nodes.Count; j++)
                 {
-                    node.UpdatePhysics(dtDiv);
+                    _nodes[j].UpdatePhysics(dtDiv);
                 }
             }
-            
 
-            foreach (Node node in _nodes)
+            for (int i = 0; i < _nodes.Count; i++)
             {
-                node.Update(deltaTime);
+                _nodes[i].Update(deltaTime);
             }
+
 
             for (int i = _nodes.Count - 1 ; i >= 0; i--)
             {

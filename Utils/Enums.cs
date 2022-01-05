@@ -1,14 +1,15 @@
 ﻿using System;
 
+[Flags]
 public enum Sides
 {
-    None,
-    Left,
-    Top,
-    Right,
-    Bottom,
-    Vertical,
-    Horizontal
+    None = 0,
+    Left = 1,
+    Top = 2,
+    Right = 4,
+    Bottom = 8,
+    Vertical = 16,
+    Horizontal = 32
 }
 
 public enum Scenes
@@ -24,6 +25,7 @@ public enum Layers
     Background,
     Shadows,
     Props,
+    Particles,
     GUI
 }
 
