@@ -75,6 +75,8 @@ namespace Color_Breaker
                 }
             }
 
+            CheckingBounds(_bounds);
+
             if (_stickedBall != null)
             {
                 Vector2 offset = new Vector2(0, 0);
@@ -132,9 +134,37 @@ namespace Color_Breaker
             base.Update(deltaTime);
         }
 
+        private void CheckingBounds(Rectangle bounds)
+        {
+            if (Side  == Sides.Left || Side == Sides.Right)
+            {
+                if (Position.Y < bounds.Top)
+                {
+                    Position.Y = bounds.Top;
+                }
+                else if(Position.Y + Height > bounds.Bottom)
+                {
+                    Position.Y = bounds.Bottom - Height;
+                }
+            }
+            else if (Side == Sides.Bottom || Side == Sides.Top)
+            {
+                if (Position.X < bounds.Left)
+                {
+                    Position.X = bounds.Left;
+                }
+                else if (Position.X + Width > bounds.Right)
+                {
+                    Position.X = bounds.Right - Width;
+                }
+            }
+
+        }
+
         public void StickBall(Ball ball)
         {
             _stickedBall = ball;
         }
+
     }
 }

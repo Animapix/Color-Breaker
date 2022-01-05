@@ -13,15 +13,18 @@ namespace Color_Breaker
         private readonly Rectangle _bounds = new Rectangle(100, 100, 600, 600);
         private int _lifes;
 
+        private float _startDelay = 0f;
+
         private enum GameState
         {
+            start,
             play,
             pause,
             gameOver,
             win
         }
 
-        private GameState _currenteState = GameState.play;
+        private GameState _currenteState = GameState.start;
 
         public override void Load()
         {
@@ -36,8 +39,11 @@ namespace Color_Breaker
             _nodeTree.Add(background);
             LoadLevel();
 
+
             _lifes = 3;
-            _currenteState = GameState.play;
+            _currenteState = GameState.start;
+            _startDelay = 0f;
+            Pause(true);
         }
 
         public override void Update(float deltaTime)
@@ -48,6 +54,14 @@ namespace Color_Breaker
 
             switch (_currenteState)
             {
+                case GameState.start: //----------------------------------------- Start ---------------------------
+                    _startDelay += deltaTime;
+                    if (_startDelay >= _nodeTree.GetNodes<Brick>().Count * 0.01f + 0.5f)
+                    {
+                        _currenteState = GameState.play;
+                        Pause(false);
+                    }
+                    break;
                 case GameState.play: // ----------------------------------------- GamePlay -------------------------
 
                     // If no more balls in arena
@@ -68,10 +82,7 @@ namespace Color_Breaker
                             // GameOver
                             IAssets assets = Services.Get<IAssets>();
 
-                            SpriteNode softBalck = new SpriteNode(assets.GetAsset<Texture2D>("SoftBlack"), Layers.Background);
-                            softBalck.Centered = true;
-                            softBalck.Position = screen.Center;
-                            _nodeTree.Add(softBalck);
+                            
 
                             LabelNode label = new LabelNode("GAMEOVER", new Rectangle(0, 0, 900, 900), assets.GetAsset<SpriteFont>("MainFont24"), Color.White, Layers.GUI);
                             label.Position = screen.Center;
@@ -113,8 +124,7 @@ namespace Color_Breaker
 
                     if (inputs.IsJustPressed(Keys.Escape))
                     {
-                        _currenteState = GameState.pause;
-                        Pause(true);
+                        Services.Get<ISceneManager>().Load(Scenes.Menu);
                     }
 
                     break;
@@ -228,8 +238,9 @@ namespace Color_Breaker
             // Set Position and color
             brick.Position = new Vector2((brick.Width + margin) * column + x, -200);
             brick.Color = color;
-            brick.Tween.Start(-200,(brick.Height + margin) * row + y,1.0f, _nodeTree.GetNodes<Brick>().Count * 0.05f);
+            brick.Tween.Start(-200,(brick.Height + margin) * row + y,0.5f, _nodeTree.GetNodes<Brick>().Count * 0.01f);
             _nodeTree.Add(brick);
         }
+
     }
 }
