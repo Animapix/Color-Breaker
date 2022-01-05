@@ -10,6 +10,7 @@ namespace Color_Breaker
         private SpriteNode _selectionRect;
         private int _selectedItem = 0;
         private int _itemsCount = 0;
+        private Tween tween = new Tween();
 
         public override void Load()
         {
@@ -51,7 +52,7 @@ namespace Color_Breaker
             _selectionRect.Position.X = screen.Width / 2;
             _selectionRect.Position.Y = 100;
             _nodeTree.Add(_selectionRect);
-
+            tween.Start(0, 100, 1.0f);
         }
 
         public override void Update(float deltaTime)
@@ -65,6 +66,7 @@ namespace Color_Breaker
                 {
                     _selectedItem = _itemsCount ;
                 }
+                tween.Start(_selectionRect.Position.Y, 100 + _selectedItem * 50, 0.3f);
             }
             else if (inputs.IsJustPressed(Keys.Down))
             {
@@ -73,6 +75,7 @@ namespace Color_Breaker
                 {
                     _selectedItem = 0;
                 }
+                tween.Start(_selectionRect.Position.Y, 100 + _selectedItem * 50, 0.3f);
             }
             else if (inputs.IsJustPressed(Keys.Enter))
             {
@@ -87,8 +90,8 @@ namespace Color_Breaker
                 }
             }
 
-            _selectionRect.Position.Y = 100 + _selectedItem * 50;
-
+            //_selectionRect.Position.Y = 100 + _selectedItem * 50;
+            _selectionRect.Position.Y = tween.easeInOutSine(deltaTime);
             base.Update(deltaTime);
         }
 
