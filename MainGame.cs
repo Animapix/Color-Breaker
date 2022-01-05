@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Diagnostics;
@@ -68,6 +69,14 @@ namespace Color_Breaker
             _assetsManager.LoadAsset<SpriteFont>("MainFont24");
             _assetsManager.LoadAsset<SpriteFont>("MainFont12");
 
+
+            // Load sounds
+            _assetsManager.LoadAsset<SoundEffect>("Bip1");
+            _assetsManager.LoadAsset<SoundEffect>("Bip2");
+            _assetsManager.LoadAsset<SoundEffect>("Bip3");
+            _assetsManager.LoadAsset<SoundEffect>("Bip4");
+            _assetsManager.LoadAsset<SoundEffect>("Bip5");
+            _assetsManager.LoadAsset<SoundEffect>("Explosion");
 
             _sceneManager.Load(Scenes.Menu);
         }

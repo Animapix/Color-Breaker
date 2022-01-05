@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -62,6 +63,7 @@ namespace Color_Breaker
                 ParticleEmiterNode emiter = new ParticleEmiterNode(Services.Get<IAssets>().GetAsset<Texture2D>("Brick"), Color);
                 emiter.Position = Center;
                 Services.Get<INodeTree>().Add(emiter);
+                Services.Get<IAssets>().GetAsset<SoundEffect>("Explosion").Play();
             }
         }
 
@@ -119,7 +121,8 @@ namespace Color_Breaker
                         _velocity = Vector2.Normalize(Util.AngleToVector(collisionAngle)) * Speed;
                     }
 
-                    
+
+                    Services.Get<IAssets>().GetAsset<SoundEffect>("Bip2").Play();
                     return;
                 }
             }
@@ -252,6 +255,7 @@ namespace Color_Breaker
                 {
                     _velocity.X = -_velocity.X;
                     Position.X = bounds.Left + Radius;
+                    Services.Get<IAssets>().GetAsset<SoundEffect>("Bip1").Play();
                 }
             }
 
@@ -262,6 +266,7 @@ namespace Color_Breaker
                 {
                     _velocity.X = -_velocity.X;
                     Position.X = bounds.Right - Radius;
+                    Services.Get<IAssets>().GetAsset<SoundEffect>("Bip1").Play();
                 }
             }
 
@@ -271,6 +276,7 @@ namespace Color_Breaker
                 {
                     _velocity.Y = -_velocity.Y;
                     Position.Y = bounds.Top + Radius;
+                    Services.Get<IAssets>().GetAsset<SoundEffect>("Bip1").Play();
                 }
             }
 
@@ -280,6 +286,7 @@ namespace Color_Breaker
                 {
                     _velocity.Y = -_velocity.Y;
                     Position.Y = bounds.Bottom - Radius;
+                    Services.Get<IAssets>().GetAsset<SoundEffect>("Bip1").Play();
                 }
             }
         }

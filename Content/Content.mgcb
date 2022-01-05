@@ -49,6 +49,36 @@
 /processorParam:TextureFormat=Color
 /build:BallShadow.png
 
+#begin Bip1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Bip1.wav
+
+#begin Bip2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Bip2.wav
+
+#begin Bip3.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Bip3.wav
+
+#begin Bip4.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Bip4.wav
+
+#begin Bip5.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Bip5.wav
+
 #begin Brick.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -72,6 +102,12 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:BrickShadow.png
+
+#begin Explosion.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Explosion.wav
 
 #begin MainFont12.spritefont
 /importer:FontDescriptionImporter
