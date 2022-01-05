@@ -8,13 +8,11 @@ namespace Color_Breaker
 {
     public sealed class Ball : SpriteNode
     {
-
         private Vector2 _velocity = new Vector2(100, 100);
         public const float Speed = 400;
         public const float Radius = 10;
         private Rectangle _bounds;
         private Sides _boundsSides;
-
 
         public Ball(Rectangle bounds, Sides boundsSides) : this(0,0,bounds, boundsSides) { }
         public Ball(float x, float y, Rectangle bounds, Sides boundsSides) : base(Services.Get<IAssets>().GetAsset<Texture2D>("Ball"), x, y, Layers.Props,Color.White)

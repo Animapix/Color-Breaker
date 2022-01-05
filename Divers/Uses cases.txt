@@ -1,0 +1,20 @@
+
+- Les contrôles du jeu se font avec le clavier.
+- Le joueur sélectionne dans le menu le bouton jouer ou quitter.
+- le joueur arrive sur un menu de sélection des niveaux.
+- Le joueur peut choisir un niveau.
+- Le joueur contrôle une raquette ou plusieurs raquettes.
+- Une balle apparaît sur une raquette.
+- Le joueur peut envoyer la balle, la direction de la balle est en fonction de la position de la raquette.
+- La balle rebondit contre les murs de l'arène.
+- La balle rebondit sur la raquette.
+- La position de l'impact sur la raquette influence la direction de la balle.
+- Les briques aparaissent sur la plateau avec un effet
+- Brique normale, blanches, 1 coups pour les détruires
+- Brique de couleur, 1 coups pour les détruires mais la couleur de la balle doit etre identique sinon la balle prend la couleur de la brique
+- Brique de couleur explosive, 1 coup pour les détruires, 1 timer de 5s avant d'exploser et de donner sa couleur aux briques autours
+- Le niveau est chargé depuis un fichier
+- le joueur gagne le niveau si il n'ya plus de briques
+- le joueur perd si la balle sort de l'arene 3 fois
+
+
