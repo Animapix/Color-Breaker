@@ -1,21 +1,21 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace Color_Breaker
 {
     public sealed class Ball : SpriteNode
     {
 
-        private Vector2 _velocity = new Vector2(300, 250);
-        private const float _speed = 400;
-        private const float _radius = 10;
+        private Vector2 _velocity = new Vector2(100, 100);
+        public const float Speed = 400;
+        public const float Radius = 10;
         private Rectangle _bounds;
         private Sides _boundsSides;
 
 
-
+        public Ball(Rectangle bounds, Sides boundsSides) : this(0,0,bounds, boundsSides) { }
         public Ball(float x, float y, Rectangle bounds, Sides boundsSides) : base(Services.Get<IAssets>().GetAsset<Texture2D>("Ball"), x, y, Layers.Props,Color.White)
         {
             Centered = true;
@@ -24,6 +24,11 @@ namespace Color_Breaker
             AddChild(spriteShadow);
             _bounds = bounds;
             _boundsSides = boundsSides;
+        }
+
+        public void Launch(Vector2 dir)
+        {
+            _velocity = Vector2.Normalize(dir) * Speed;
         }
 
         public override void UpdatePhysics(float deltaTime)
@@ -69,17 +74,52 @@ namespace Color_Breaker
                 {
                     Sides collisionSide = getSideCollision(pad.Position, pad.Width, pad.Height);
                     Position -= Vector2.Normalize(_velocity);
+                    float value = 0;
+
                     switch (collisionSide)
                     {
                         case Sides.Left:
                         case Sides.Right:
+                            value = (Position.Y - pad.Position.Y) / pad.Height - 0.5f;
                             _velocity.X = -_velocity.X;
                             break;
                         case Sides.Bottom:
                         case Sides.Top:
+                            value = (Position.X - pad.Position.X) / pad.Width - 0.5f;
                             _velocity.Y = -_velocity.Y;
                             break;
                     }
+
+                    // Check collision influence
+                    float offsetAngle = (float)Math.PI / 2 * value;
+                    float collisionAngle = Util.VectorToAngle(_velocity);
+
+                    if (pad.Side == Sides.Left && collisionSide == Sides.Right)
+                    {
+                        collisionAngle += offsetAngle;
+                        //collisionAngle = (float)Math.Clamp(collisionAngle, Math.PI / 4, 3 * Math.PI / 4);
+                        _velocity = Vector2.Normalize(Util.AngleToVector(collisionAngle)) * Speed;
+                    }
+                    else if (pad.Side == Sides.Right && collisionSide == Sides.Left)
+                    {
+                        collisionAngle -= offsetAngle;
+                        //collisionAngle = (float)Math.Clamp(collisionAngle, 3* Math.PI / 4, 5 * Math.PI / 4); Check clamp wirh negative and positive value -180 180
+                        _velocity = Vector2.Normalize(Util.AngleToVector(collisionAngle)) * Speed;
+                    }
+                    else if (pad.Side == Sides.Top && collisionSide == Sides.Bottom)
+                    {
+                        collisionAngle -= offsetAngle;
+                        collisionAngle = (float)Math.Clamp(collisionAngle, Math.PI / 4, 3 * Math.PI / 4 );
+                        _velocity = Vector2.Normalize(Util.AngleToVector(collisionAngle)) * Speed;
+                    }
+                    else if (pad.Side == Sides.Bottom && collisionSide == Sides.Top)
+                    {
+                        collisionAngle += offsetAngle;
+                        collisionAngle = (float)Math.Clamp(collisionAngle, -3*Math.PI/4, -Math.PI / 4);
+                        _velocity = Vector2.Normalize(Util.AngleToVector(collisionAngle)) * Speed;
+                    }
+
+                    
                     return;
                 }
             }
@@ -115,19 +155,19 @@ namespace Color_Breaker
 
         private bool IsIntersect(Vector2 rectPosition, float rectWidth, float rectHeight)
         {
-            if (Position.Y - _radius > rectPosition.Y + rectHeight)
+            if (Position.Y - Radius > rectPosition.Y + rectHeight)
             {
                 return false;
             }
-            if (Position.Y + _radius < rectPosition.Y)
+            if (Position.Y + Radius < rectPosition.Y)
             {
                 return false;
             }
-            if (Position.X - _radius > rectPosition.X + rectWidth)
+            if (Position.X - Radius > rectPosition.X + rectWidth)
             {
                 return false;
             }
-            if (Position.X + _radius < rectPosition.X)
+            if (Position.X + Radius < rectPosition.X)
             {
                 return false;
             }
@@ -208,38 +248,38 @@ namespace Color_Breaker
         private void CheckingBounds(Rectangle bounds)
         {
             if ((_boundsSides & Sides.Left) == Sides.Left){
-                if (Position.X - _radius < bounds.Left)
+                if (Position.X - Radius < bounds.Left)
                 {
                     _velocity.X = -_velocity.X;
-                    Position.X = bounds.Left + _radius;
+                    Position.X = bounds.Left + Radius;
                 }
             }
 
 
             if ((_boundsSides & Sides.Right) == Sides.Right)
             {
-                if (Position.X + _radius > bounds.Right)
+                if (Position.X + Radius > bounds.Right)
                 {
                     _velocity.X = -_velocity.X;
-                    Position.X = bounds.Right - _radius;
+                    Position.X = bounds.Right - Radius;
                 }
             }
 
             if ((_boundsSides & Sides.Top) == Sides.Top)
             {
-                if (Position.Y - _radius < bounds.Top)
+                if (Position.Y - Radius < bounds.Top)
                 {
                     _velocity.Y = -_velocity.Y;
-                    Position.Y = bounds.Top + _radius;
+                    Position.Y = bounds.Top + Radius;
                 }
             }
 
 
             if ((_boundsSides & Sides.Bottom) == Sides.Bottom){
-                if (Position.Y + _radius > bounds.Bottom)
+                if (Position.Y + Radius > bounds.Bottom)
                 {
                     _velocity.Y = -_velocity.Y;
-                    Position.Y = bounds.Bottom - _radius;
+                    Position.Y = bounds.Bottom - Radius;
                 }
             }
         }

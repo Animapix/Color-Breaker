@@ -1,9 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Diagnostics;
 
 namespace Color_Breaker
 {
@@ -13,11 +12,14 @@ namespace Color_Breaker
         private const int _rows = 16;
         private Sides _levelSides = 0;
         private readonly Rectangle _bounds = new Rectangle(100, 100, 600, 600);
+        private int _lifes;
 
         private enum GameState
         {
             play,
-            pause
+            pause,
+            gameOver,
+            win
         }
 
         private GameState _currenteState = GameState.play;
@@ -33,36 +35,88 @@ namespace Color_Breaker
             background.Centered = true;
             background.Position = screen.Center;
             _nodeTree.Add(background);
-
-            
-
             LoadLevel();
-
-
-            // Add ball
-            Ball ball = new Ball(150, 150, _bounds, _levelSides);
-            _nodeTree.Add(ball);
 
             LabelNode label = new LabelNode("100000",new Rectangle(0,0,900,100), assets.GetAsset<SpriteFont>("MainFont24"), Color.White, Layers.GUI);
             label.Position = new Vector2(screen.Width/2, 50);
             _nodeTree.Add(label);
 
+            _lifes = 3;
+            _currenteState = GameState.play;
         }
 
         public override void Update(float deltaTime)
         {
             base.Update(deltaTime);
-
             IScreen screen = Services.Get<IScreen>();
+            IInputs inputs = Services.Get<IInputs>();
 
+            switch (_currenteState)
+            {
+                case GameState.play: // ----------------------------------------- GamePlay -------------------------
 
-            if (_currenteState == GameState.pause)
-            {
-                Pause(true);
-            }else
-            {
-                Pause(false);
+                    // If no more balls in arena
+                    if (_nodeTree.GetNodes<Ball>().Count == 0)
+                    {
+                        _lifes--;
+
+                        if (_lifes >= 0)
+                        {
+                            // Spawn new Ball
+                            List<Pad> pads = _nodeTree.GetNodes<Pad>();
+                            Ball ball = new Ball(_bounds, _levelSides);
+                            _nodeTree.Add(ball);
+                            pads[0].StickBall(ball);
+                        }
+                        else
+                        {
+                            // GameOver
+                            _currenteState = GameState.gameOver;
+                            Pause(true);
+                        }
+
+                    }
+
+                    if (_nodeTree.GetNodes<Brick>().Count == 0)
+                    {
+                        _currenteState = GameState.win;
+                        Pause(true);
+                    }
+
+                    if (inputs.IsJustPressed(Keys.Escape))
+                    {
+                        _currenteState = GameState.pause;
+                        Pause(true);
+                    }
+
+                    break;
+                case GameState.pause: // ----------------------------------------- Pause -------------------------
+
+                    if (inputs.IsJustPressed(Keys.Escape))
+                    {
+                        _currenteState = GameState.play;
+                        Pause(false);
+                    }
+
+                    break;
+                case GameState.gameOver: // ----------------------------------------- GameOver -------------------------
+
+                    if (inputs.IsJustPressed(Keys.Enter))
+                    {
+                        Services.Get<ISceneManager>().Load(Scenes.Menu);
+                    }
+
+                    break;
+                case GameState.win: // ----------------------------------------- Win -------------------------
+
+                    if (inputs.IsJustPressed(Keys.Enter))
+                    {
+                        Services.Get<ISceneManager>().Load(Scenes.Menu);
+                    }
+
+                    break;
             }
+
 
         }
 
@@ -89,51 +143,53 @@ namespace Color_Breaker
             {
                 for (int row = 0; row < level.bricks[column].Count; row++)
                 {
-                    if(level.bricks[column][row] != 0)
-                        AddNewBrick(column, row, 4, Color.White);
+                    if (level.bricks[column][row] == 1)
+                    {
+                        AddNewBrick(column, row, 4, Color.White, level.bricks[column][row]);
+                    }
+                    else if (level.bricks[column][row] == 2)
+                    {
+                        AddNewBrick(column, row, 4, Color.Red, level.bricks[column][row]);
+                    }
+                    else if (level.bricks[column][row] == 3)
+                    {
+                        AddNewBrick(column, row, 4, Color.Green, level.bricks[column][row]);
+                    }
+                    else if (level.bricks[column][row] == 4)
+                    {
+                        AddNewBrick(column, row, 4, Color.Blue, level.bricks[column][row]);
+                    }
                 }
             }
+            _levelSides = level.GetSidesFlag();
 
             // Check walls
             if (level.sides[0])// If side left
-            { 
                 _nodeTree.Add(new Wall(90, screen.Center.Y, Sides.Left));
-            }
             else
-            {
-                _nodeTree.Add(new Pad(Sides.Left));
-            }
+                _nodeTree.Add(new Pad(_bounds, Sides.Left));
 
             if (level.sides[1])// If side top
-            {
                 _nodeTree.Add(new Wall(screen.Center.X, 90, Sides.Top));
-            }
             else
-            {
-                _nodeTree.Add(new Pad(Sides.Top));
-            }
+                _nodeTree.Add(new Pad(_bounds,Sides.Top));
 
             if (level.sides[2])// If side right
-            {
                 _nodeTree.Add(new Wall(screen.Width - 90, screen.Center.Y, Sides.Right));
-            }
             else
-            {
-                _nodeTree.Add(new Pad(Sides.Right));
-            }
+                _nodeTree.Add(new Pad(_bounds,Sides.Right));
 
             if (level.sides[3])// If side bottom
-            { 
                 _nodeTree.Add(new Wall(screen.Center.X, screen.Height - 90, Sides.Bottom)); 
-            }
             else
-            {
-                _nodeTree.Add(new Pad(Sides.Bottom));
-            }
-            _levelSides = level.GetSidesFlag();
+                _nodeTree.Add(new Pad(_bounds,Sides.Bottom));
+
+
+            
+
         }
 
-        private void AddNewBrick(int column, int row,float margin, Color color)
+        private void AddNewBrick(int column, int row,float margin, Color color, int type)
         {
             IScreen screen = Services.Get<IScreen>();
             Brick brick = new Brick();

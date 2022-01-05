@@ -7,7 +7,7 @@ namespace Color_Breaker
     public class ParticleEmiterNode : Node
     {
 
-        public int Amount = 500;
+        public int Amount = 300;
         private Random rnd;
         private Texture2D _texture;
         private float _lifeTime;

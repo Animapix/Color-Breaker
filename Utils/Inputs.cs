@@ -29,6 +29,5 @@ namespace Color_Breaker
         {
             return Keyboard.GetState().IsKeyDown(key);
         }
-
     }
 }

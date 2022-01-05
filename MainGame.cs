@@ -73,8 +73,6 @@ namespace Color_Breaker
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
             _sceneManager.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
             base.Update(gameTime);
             _inputs.UpdateState();

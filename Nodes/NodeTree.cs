@@ -91,15 +91,7 @@ namespace Color_Breaker
                     node.Draw(spriteBatch);
                 }
             }
-            /*
-            foreach (Node node in _nodes)
-            {
-                node.Draw(spriteBatch);
-                foreach (Node child in node.Children)
-                {
-                    child.Draw(spriteBatch);
-                }
-            }*/
+
 
             spriteBatch.End();
         }

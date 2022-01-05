@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System.Diagnostics;
 
 namespace Color_Breaker
@@ -13,12 +14,20 @@ namespace Color_Breaker
             AddChild(spriteShadow);
         }
 
-        public void Hit(Ball ball, Sides collisionSide)
+        public virtual void Hit(Ball ball, Sides collisionSide)
         {
-            ParticleEmiterNode emiter = new ParticleEmiterNode(Services.Get<IAssets>().GetAsset<Texture2D>("Brick"));
-            emiter.Position = Center;
-            Services.Get<INodeTree>().Add(emiter);
-            Free = true;
+            if (ball.Color == Color || Color == Color.White)
+            {
+                ParticleEmiterNode emiter = new ParticleEmiterNode(Services.Get<IAssets>().GetAsset<Texture2D>("Brick"));
+                emiter.Position = Center;
+                Services.Get<INodeTree>().Add(emiter);
+                Free = true;
+            }
+            else
+            {
+                ball.Color = Color;
+            }
         }
     }
+
 }
